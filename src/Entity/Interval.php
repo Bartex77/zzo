@@ -22,10 +22,9 @@ class Interval
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TimeUnit")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=1)
      */
-    private $TimeUnit;
+    private $timeUnit;
 
     /**
      * @ORM\Column(type="float")
@@ -49,14 +48,14 @@ class Interval
         return $this;
     }
 
-    public function getTimeUnit(): ?TimeUnit
+    public function getTimeUnit(): ?string
     {
-        return $this->TimeUnit;
+        return $this->timeUnit;
     }
 
-    public function setTimeUnit(?TimeUnit $TimeUnit): self
+    public function setTimeUnit(string $timeUnit): self
     {
-        $this->TimeUnit = $TimeUnit;
+        $this->timeUnit = $timeUnit;
 
         return $this;
     }

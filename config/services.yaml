@@ -47,13 +47,6 @@ services:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Interval }
         public: true
 
-    admin.time_unit:
-        class: App\Admin\TimeUnitAdmin
-        arguments: [~, App\Entity\TimeUnit, App\Controller\TimeUnitAdminController]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: TimeUnit }
-        public: true
-
     admin.preservative_material_unit:
         class: App\Admin\PreservativeMaterialUnitAdmin
         arguments: [~, App\Entity\PreservativeMaterialUnit, App\Controller\PreservativeMaterialUnitAdminController]
