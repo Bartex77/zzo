@@ -25,3 +25,59 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    admin.equipment_producer:
+        class: App\Admin\EquipmentProducerAdmin
+        arguments: [~, App\Entity\EquipmentProducer, App\Controller\EquipmentProducerAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EquipmentProducer }
+        public: true
+
+    admin.equipment_type:
+        class: App\Admin\EquipmentTypeAdmin
+        arguments: [~, App\Entity\EquipmentType, App\Controller\EquipmentTypeAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EquipmentType }
+        public: true
+
+    admin.interval:
+        class: App\Admin\IntervalAdmin
+        arguments: [~, App\Entity\Interval, App\Controller\IntervalAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Interval }
+        public: true
+
+    admin.time_unit:
+        class: App\Admin\TimeUnitAdmin
+        arguments: [~, App\Entity\TimeUnit, App\Controller\TimeUnitAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TimeUnit }
+        public: true
+
+    admin.preservative_material_unit:
+        class: App\Admin\PreservativeMaterialUnitAdmin
+        arguments: [~, App\Entity\PreservativeMaterialUnit, App\Controller\PreservativeMaterialUnitAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PreservativeMaterialUnit }
+        public: true
+
+    admin.preservative_material:
+        class: App\Admin\PreservativeMaterialAdmin
+        arguments: [~, App\Entity\PreservativeMaterial, App\Controller\PreservativeMaterialAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PreservativeMaterial }
+        public: true
+
+    admin.preservative_product:
+        class: App\Admin\PreservativeProductAdmin
+        arguments: [~, App\Entity\PreservativeProduct, App\Controller\PreservativeProductAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PreservativeProduct }
+        public: true
+
+    admin.equipment:
+        class: App\Admin\EquipmentAdmin
+        arguments: [~, App\Entity\Equipment, App\Controller\EquipmentAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Equipment }
+        public: true
