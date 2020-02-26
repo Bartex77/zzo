@@ -27,15 +27,15 @@ class Equipment
     private $number;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\EquipmentProducer", inversedBy="equipment")
-     */
-    private $EquipmentProducer;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\EquipmentType", inversedBy="equipment")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $EquipmentType;
+    private $equipmentType;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
 
     public function getId(): ?int
     {
@@ -66,26 +66,26 @@ class Equipment
         return $this;
     }
 
-    public function getEquipmentProducer(): ?EquipmentProducer
+    public function getEquipmentType(): ?EquipmentType
     {
-        return $this->EquipmentProducer;
+        return $this->equipmentType;
     }
 
-    public function setEquipmentProducer(?EquipmentProducer $EquipmentProducer): self
+    public function setEquipmentType(?EquipmentType $equipmentType): self
     {
-        $this->EquipmentProducer = $EquipmentProducer;
+        $this->equipmentType = $equipmentType;
 
         return $this;
     }
 
-    public function getEquipmentType(): ?EquipmentType
+    public function getComment(): ?string
     {
-        return $this->EquipmentType;
+        return $this->comment;
     }
 
-    public function setEquipmentType(?EquipmentType $EquipmentType): self
+    public function setComment(?string $comment): self
     {
-        $this->EquipmentType = $EquipmentType;
+        $this->comment = $comment;
 
         return $this;
     }

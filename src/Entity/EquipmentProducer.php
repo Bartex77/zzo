@@ -24,13 +24,13 @@ class EquipmentProducer
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Equipment", mappedBy="EquipmentProducer")
+     * @ORM\OneToMany(targetEntity="App\Entity\EquipmentType", mappedBy="EquipmentProducer")
      */
-    private $equipment;
+    private $equipmentType;
 
     public function __construct()
     {
-        $this->equipment = new ArrayCollection();
+        $this->equipmentType = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -53,31 +53,36 @@ class EquipmentProducer
     /**
      * @return Collection|Equipment[]
      */
-    public function getEquipment(): Collection
+    public function getEquipmentType(): Collection
     {
-        return $this->equipment;
+        return $this->equipmentType;
     }
 
-    public function addEquipment(Equipment $equipment): self
+    public function addEquipmentType(EquipmentType $equipmentType): self
     {
-        if (!$this->equipment->contains($equipment)) {
-            $this->equipment[] = $equipment;
-            $equipment->setEquipmentProducer($this);
+        if (!$this->equipmentType->contains($equipmentType)) {
+            $this->equipmentType[] = $equipmentType;
+            $equipmentType->setEquipmentProducer($this);
         }
 
         return $this;
     }
 
-    public function removeEquipment(Equipment $equipment): self
+    public function removeEquipment(EquipmentType $equipmentType): self
     {
-        if ($this->equipment->contains($equipment)) {
-            $this->equipment->removeElement($equipment);
+        if ($this->equipmentType->contains($equipmentType)) {
+            $this->equipmentType->removeElement($equipmentType);
             // set the owning side to null (unless already changed)
-            if ($equipment->getEquipmentProducer() === $this) {
-                $equipment->setEquipmentProducer(null);
+            if ($equipmentType->getEquipmentProducer() === $this) {
+                $equipmentType->setEquipmentProducer(null);
             }
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

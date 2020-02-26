@@ -24,9 +24,19 @@ class EquipmentType
     private $name;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\EquipmentProducer", inversedBy="equipment")
+     */
+    private $equipmentProducer;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Equipment", mappedBy="EquipmentType", orphanRemoval=true)
      */
     private $equipment;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
 
     public function __construct()
     {
@@ -46,6 +56,18 @@ class EquipmentType
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getEquipmentProducer(): ?EquipmentProducer
+    {
+        return $this->equipmentProducer;
+    }
+
+    public function setEquipmentProducer(?EquipmentProducer $equipmentProducer): self
+    {
+        $this->equipmentProducer = $equipmentProducer;
 
         return $this;
     }
@@ -77,6 +99,18 @@ class EquipmentType
                 $equipment->setEquipmentType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
     }
