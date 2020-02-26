@@ -19,6 +19,7 @@ final class EquipmentAdmin extends AbstractAdmin
             ->add('id')
             ->add('name')
             ->add('number')
+            ->add('equipmentType')
             ;
     }
 
@@ -28,6 +29,7 @@ final class EquipmentAdmin extends AbstractAdmin
             ->add('id')
             ->add('name')
             ->add('number')
+            ->add('equipmentType')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
@@ -43,6 +45,9 @@ final class EquipmentAdmin extends AbstractAdmin
             ->add('id')
             ->add('name')
             ->add('number')
+            ->add('equipmentType', null, [
+                'class' => 'App\Entity\EquipmentType',
+            ])
             ;
     }
 
@@ -52,6 +57,7 @@ final class EquipmentAdmin extends AbstractAdmin
             ->add('id')
             ->add('name')
             ->add('number')
+            ->add('equipmentType')
             ;
     }
 }

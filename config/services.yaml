@@ -30,47 +30,54 @@ services:
         class: App\Admin\EquipmentProducerAdmin
         arguments: [~, App\Entity\EquipmentProducer, App\Controller\EquipmentProducerAdminController]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: EquipmentProducer }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Producenci }
         public: true
 
     admin.equipment_type:
         class: App\Admin\EquipmentTypeAdmin
         arguments: [~, App\Entity\EquipmentType, App\Controller\EquipmentTypeAdminController]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: EquipmentType }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Typy urządzeń }
         public: true
 
-    admin.interval:
-        class: App\Admin\IntervalAdmin
-        arguments: [~, App\Entity\Interval, App\Controller\IntervalAdminController]
+    admin.time_interval:
+        class: App\Admin\TimeIntervalAdmin
+        arguments: [~, App\Entity\TimeInterval, App\Controller\TimeIntervalAdminController]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Interval }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Interwały }
         public: true
 
     admin.preservative_material_unit:
         class: App\Admin\PreservativeMaterialUnitAdmin
         arguments: [~, App\Entity\PreservativeMaterialUnit, App\Controller\PreservativeMaterialUnitAdminController]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: PreservativeMaterialUnit }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Jednostki substancji konserwujących }
         public: true
 
     admin.preservative_material:
         class: App\Admin\PreservativeMaterialAdmin
         arguments: [~, App\Entity\PreservativeMaterial, App\Controller\PreservativeMaterialAdminController]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: PreservativeMaterial }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Rodzaje substancji konserwujących }
         public: true
 
     admin.preservative_product:
         class: App\Admin\PreservativeProductAdmin
         arguments: [~, App\Entity\PreservativeProduct, App\Controller\PreservativeProductAdminController]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: PreservativeProduct }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Produkty konserwujące }
         public: true
 
     admin.equipment:
         class: App\Admin\EquipmentAdmin
         arguments: [~, App\Entity\Equipment, App\Controller\EquipmentAdminController]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Equipment }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Urządzenia }
         public: true
+
+    console_command.cvs_import_equipment:
+        class: App\Command\EquipmentImportCommand
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - {name: console.command}

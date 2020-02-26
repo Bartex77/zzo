@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController;
 
-final class IntervalAdminController extends CRUDController
+final class TimeIntervalAdminController extends CRUDController
 {
 
 }

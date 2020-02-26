@@ -24,7 +24,7 @@ class EquipmentProducer
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\EquipmentType", mappedBy="EquipmentProducer")
+     * @ORM\OneToMany(targetEntity="App\Entity\EquipmentType", mappedBy="equipmentProducer", cascade={"persist", "remove"})
      */
     private $equipmentType;
 

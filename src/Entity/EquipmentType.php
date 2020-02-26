@@ -29,7 +29,7 @@ class EquipmentType
     private $equipmentProducer;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Equipment", mappedBy="EquipmentType", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Equipment", mappedBy="equipmentType", orphanRemoval=true)
      */
     private $equipment;
 
@@ -113,5 +113,10 @@ class EquipmentType
         $this->comment = $comment;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

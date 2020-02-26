@@ -5,10 +5,19 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\IntervalRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TimeIntervalRepository")
  */
-class Interval
+class TimeInterval
 {
+    const TIME_UNITS = [
+        'wh'    => 'roboczogodziny',
+        'h'     => 'godziny',
+        'd'     => 'dni',
+        'w'     => 'tygodnie',
+        'm'     => 'miesiące',
+        'y'     => 'lata',
+    ];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -22,12 +31,12 @@ class Interval
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=1)
+     * @ORM\Column(type="string", length=2)
      */
     private $timeUnit;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="string", length=10)
      */
     private $value;
 
@@ -60,12 +69,12 @@ class Interval
         return $this;
     }
 
-    public function getValue(): ?float
+    public function getValue(): ?string
     {
         return $this->value;
     }
 
-    public function setValue(float $value): self
+    public function setValue(string $value): self
     {
         $this->value = $value;
 

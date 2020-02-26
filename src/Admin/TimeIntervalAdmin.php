@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use App\Entity\TimeInterval;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-final class IntervalAdmin extends AbstractAdmin
+final class TimeIntervalAdmin extends AbstractAdmin
 {
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
@@ -43,7 +44,10 @@ final class IntervalAdmin extends AbstractAdmin
             ->add('id')
             ->add('name')
             ->add('value')
-            ;
+            ->add('timeUnit', 'choice', [
+                'choices' => TimeInterval::TIME_UNITS
+            ])
+        ;
     }
 
     protected function configureShowFields(ShowMapper $showMapper): void
