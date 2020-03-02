@@ -38,7 +38,7 @@ final class PreservativeMaterialUnitAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
-            ->add('id')
+            //->add('id')
             ->add('name')
             ;
     }

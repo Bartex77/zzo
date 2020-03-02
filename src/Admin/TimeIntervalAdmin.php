@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 final class TimeIntervalAdmin extends AbstractAdmin
 {
@@ -29,6 +30,7 @@ final class TimeIntervalAdmin extends AbstractAdmin
             ->add('id')
             ->add('name')
             ->add('value')
+            ->add('timeUnit')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
@@ -40,12 +42,13 @@ final class TimeIntervalAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper): void
     {
+        $timeUnits = array_flip(TimeInterval::TIME_UNITS);
         $formMapper
-            ->add('id')
+            //->add('id')
             ->add('name')
             ->add('value')
-            ->add('timeUnit', 'choice', [
-                'choices' => TimeInterval::TIME_UNITS
+            ->add('timeUnit', ChoiceType::class, [
+                'choices' => $timeUnits
             ])
         ;
     }
@@ -56,6 +59,7 @@ final class TimeIntervalAdmin extends AbstractAdmin
             ->add('id')
             ->add('name')
             ->add('value')
+            ->add('timeUnit')
             ;
     }
 }

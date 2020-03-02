@@ -10,7 +10,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-final class PreservativeProductAdmin extends AbstractAdmin
+final class ServiceActionAdmin extends AbstractAdmin
 {
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
@@ -18,6 +18,9 @@ final class PreservativeProductAdmin extends AbstractAdmin
         $datagridMapper
             ->add('id')
             ->add('name')
+            ->add('performedByProducer')
+            ->add('preservativeProductAmount')
+            ->add('comment')
             ;
     }
 
@@ -26,8 +29,12 @@ final class PreservativeProductAdmin extends AbstractAdmin
         $listMapper
             ->add('id')
             ->add('name')
-            ->add('preservativeMaterial')
-            ->add('preservativeMaterialUnit')
+            ->add('performedByProducer')
+            ->add('preservativeProductAmount')
+            ->add('preservativeProduct')
+            ->add('timeInterval')
+            ->add('timeIntervalValue')
+            ->add('comment')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
@@ -42,12 +49,16 @@ final class PreservativeProductAdmin extends AbstractAdmin
         $formMapper
             //->add('id')
             ->add('name')
-            ->add('preservativeMaterial', null, [
-                'class' => 'App\Entity\PreservativeMaterial',
+            ->add('performedByProducer')
+            ->add('preservativeProductAmount')
+            ->add('preservativeProduct', null, [
+                'class' => 'App\Entity\PreservativeProduct',
             ])
-            ->add('preservativeMaterialUnit', null, [
-                'class' => 'App\Entity\PreservativeMaterialUnit',
+            ->add('timeInterval', null, [
+                'class' => 'App\Entity\TimeInterval',
             ])
+            ->add('timeIntervalValue')
+            ->add('comment')
             ;
     }
 
@@ -56,8 +67,12 @@ final class PreservativeProductAdmin extends AbstractAdmin
         $showMapper
             ->add('id')
             ->add('name')
-            ->add('preservativeMaterial')
-            ->add('preservativeMaterialUnit')
+            ->add('performedByProducer')
+            ->add('preservativeProductAmount')
+            ->add('preservativeProduct')
+            ->add('timeInterval')
+            ->add('timeIntervalValue')
+            ->add('comment')
             ;
     }
 }

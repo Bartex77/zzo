@@ -81,3 +81,10 @@ services:
             - "@doctrine.orm.entity_manager"
         tags:
             - {name: console.command}
+
+    admin.service_action:
+        class: App\Admin\ServiceActionAdmin
+        arguments: [~, App\Entity\ServiceAction, App\Controller\ServiceActionAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Działania serwisowe }
+        public: true
