@@ -52,16 +52,27 @@ class EquipmentImportCommand extends Command
         $io->progressStart($results->count());
         $next = 'type';
         $type = null;
+        $equipment = null;
 
         foreach ($results as $record) {
             switch ($next) {
                 case 'equipment':
+                    if (strstr($record['equipment'], 'Dmuchawa cyrculacyjna (obiegowa) biogazu')) {
+                        $io->note($record['equipment']);
+                    }
                     $next = 'service';
                     $number = str_replace('do / bis', 'do', $record['number']);
                     $number = str_replace('bis / do', 'do', $number);
                     $number = str_replace('bis', 'do', $number);
-                    $name = explode('/', $record['equipment']);
-                    $name = trim($name[0]);
+
+                    if (strstr($record['equipment'], chr(10))) {
+                        $name = explode(chr(10), $record['equipment']);
+                        $name[0] = str_replace('/', '', $name[0]);
+                    } else {
+                        $name = explode('/', $record['equipment']);
+                    }
+                    $name = $name[0];
+
                     $equipment = $this->entityManager->getRepository(Equipment::class)
                         ->findOneBy(['name' => $name]);
                     if (!$equipment) {
@@ -79,46 +90,76 @@ class EquipmentImportCommand extends Command
                     break;
 
                 case 'type':
-                    if (strstr($record['equipment'], chr(10))) {
-                        $typeAndProducer = explode(chr(10), $record['equipment']);
-                        $typeAndProducer[0] = str_replace('/', '', $typeAndProducer[0]);
-                    } else {
-                        $typeAndProducer = explode('/', $record['equipment']);
-                    }
+                    if (trim($record['number'] == '')) {
+                        if (strstr($record['equipment'], chr(10))) {
+                            $typeAndProducer = explode(chr(10), $record['equipment']);
+                            $typeAndProducer[0] = str_replace('/', '', $typeAndProducer[0]);
+                        } else {
+                            $typeAndProducer = explode('/', $record['equipment']);
+                        }
 
-                    $typeAndProducer = explode(',', $typeAndProducer[0]);
-                    if (!isset($typeAndProducer[1]) || trim($typeAndProducer[1]) == '') {
-                        $producer = null;
+                        $typeAndProducer = explode(',', $typeAndProducer[0]);
+                        if (!isset($typeAndProducer[1]) || trim($typeAndProducer[1]) == '') {
+                            $producer = null;
+                        } else {
+                            $producerName = trim(str_replace('Firmy ', '', $typeAndProducer[1]));
+                            $producer = $this->entityManager->getRepository(EquipmentProducer::class)
+                                ->findOneBy(['name' => $producerName]);
+                            if (!$producer) {
+                                $producer = (new EquipmentProducer())
+                                    ->setName($producerName);
+                                $this->entityManager->persist($producer);
+                                $this->entityManager->flush();
+                            }
+                        }
+
+                        $typeName = trim($typeAndProducer[0]);
+                        $type = $this->entityManager->getRepository(EquipmentType::class)
+                            ->findOneBy([
+                                'name' => $typeName,
+                                'equipmentProducer' => $producer,
+                            ]);
+                        if (!$type) {
+                            $comment = explode('/', $record['comment']);
+                            $comment = trim($comment[0]);
+                            $type = (new EquipmentType())
+                                ->setName($typeName)
+                                ->setEquipmentProducer($producer)
+                                ->setComment($comment);
+                            $this->entityManager->persist($type);
+                            $this->entityManager->flush();
+                        }
+
+                        $next = 'skip';
                     } else {
-                        $producerName = trim(str_replace('Firmy ', '', $typeAndProducer[1]));
-                        $producer = $this->entityManager->getRepository(EquipmentProducer::class)
-                            ->findOneBy(['name' => $producerName]);
-                        if (!$producer) {
-                            $producer = (new EquipmentProducer())
-                                ->setName($producerName);
-                            $this->entityManager->persist($producer);
+                        $next = 'service';
+                        $number = str_replace('do / bis', 'do', $record['number']);
+                        $number = str_replace('bis / do', 'do', $number);
+                        $number = str_replace('bis', 'do', $number);
+
+                        if (strstr($record['equipment'], chr(10))) {
+                            $name = explode(chr(10), $record['equipment']);
+                            $name[0] = str_replace('/', '', $name[0]);
+                        } else {
+                            $name = explode('/', $record['equipment']);
+                        }
+                        $name = $name[0];
+
+                        $equipment = $this->entityManager->getRepository(Equipment::class)
+                            ->findOneBy(['name' => $name]);
+                        if (!$equipment) {
+                            $comment = explode('/', $record['comment']);
+                            $comment = trim($comment[0]);
+                            $equipment = (new Equipment())
+                                ->setName($name)
+                                ->setNumber($number)
+                                ->setEquipmentType($type)
+                                ->setComment($comment)
+                            ;
+                            $this->entityManager->persist($equipment);
                             $this->entityManager->flush();
                         }
                     }
-
-                    $typeName = trim($typeAndProducer[0]);
-                    $type = $this->entityManager->getRepository(EquipmentType::class)
-                        ->findOneBy([
-                            'name' => $typeName,
-                            'equipmentProducer' => $producer,
-                        ]);
-                    if (!$type) {
-                        $comment = explode('/', $record['comment']);
-                        $comment = trim($comment[0]);
-                        $type = (new EquipmentType())
-                            ->setName($typeName)
-                            ->setEquipmentProducer($producer)
-                            ->setComment($comment);
-                        $this->entityManager->persist($type);
-                        $this->entityManager->flush();
-                    }
-
-                    $next = 'skip';
                     break;
 
                 case 'skip':
@@ -126,6 +167,7 @@ class EquipmentImportCommand extends Command
                     break;
 
                 case 'service':
+                    //$io->note($record['equipment']);
                     if (trim($record['equipment']) == '') {
                         $next = 'type';
                         break;
@@ -181,6 +223,7 @@ class EquipmentImportCommand extends Command
                         ->setTimeIntervalValue($timeIntervalValue)
                         ->setPreservativeProduct($preservativeProduct)
                         ->setPreservativeProductAmount($preservativeProductAmount)
+                        ->setEquipment($equipment)
                         ->setComment($comment)
                     ;
 

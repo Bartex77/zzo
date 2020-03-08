@@ -31,6 +31,8 @@ final class TimeIntervalAdmin extends AbstractAdmin
             ->add('name')
             ->add('value')
             ->add('timeUnit')
+            ->add('warningValue')
+            ->add('warningTimeUnit')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
@@ -50,6 +52,10 @@ final class TimeIntervalAdmin extends AbstractAdmin
             ->add('timeUnit', ChoiceType::class, [
                 'choices' => $timeUnits
             ])
+            ->add('warningValue')
+            ->add('warningTimeUnit', ChoiceType::class, [
+                'choices' => $timeUnits
+            ])
         ;
     }
 
@@ -60,6 +66,8 @@ final class TimeIntervalAdmin extends AbstractAdmin
             ->add('name')
             ->add('value')
             ->add('timeUnit')
+            ->add('warningValue')
+            ->add('warningTimeUnit')
             ;
     }
 }

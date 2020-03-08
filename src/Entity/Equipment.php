@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class Equipment
      * @ORM\Column(type="text", nullable=true)
      */
     private $comment;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ServiceAction", mappedBy="equipment", orphanRemoval=true)
+     */
+    private $serviceActions;
+
+    public function __construct()
+    {
+        $this->serviceActions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -88,5 +100,41 @@ class Equipment
         $this->comment = $comment;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|ServiceAction[]
+     */
+    public function getServiceActions(): Collection
+    {
+        return $this->serviceActions;
+    }
+
+    public function addServiceAction(ServiceAction $serviceAction): self
+    {
+        if (!$this->serviceActions->contains($serviceAction)) {
+            $this->serviceActions[] = $serviceAction;
+            $serviceAction->setEquipment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeServiceAction(ServiceAction $serviceAction): self
+    {
+        if ($this->serviceActions->contains($serviceAction)) {
+            $this->serviceActions->removeElement($serviceAction);
+            // set the owning side to null (unless already changed)
+            if ($serviceAction->getEquipment() === $this) {
+                $serviceAction->setEquipment(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

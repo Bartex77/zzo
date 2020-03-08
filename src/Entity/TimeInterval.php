@@ -47,6 +47,16 @@ class TimeInterval
      */
     private $serviceActions;
 
+    /**
+     * @ORM\Column(type="string", length=2, nullable=true)
+     */
+    private $warningTimeUnit;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $WarningValue;
+
     public function __construct()
     {
         $this->serviceActions = new ArrayCollection();
@@ -127,5 +137,29 @@ class TimeInterval
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getWarningTimeUnit(): ?string
+    {
+        return $this->warningTimeUnit;
+    }
+
+    public function setWarningTimeUnit(?string $warningTimeUnit): self
+    {
+        $this->warningTimeUnit = $warningTimeUnit;
+
+        return $this;
+    }
+
+    public function getWarningValue(): ?int
+    {
+        return $this->WarningValue;
+    }
+
+    public function setWarningValue(?int $WarningValue): self
+    {
+        $this->WarningValue = $WarningValue;
+
+        return $this;
     }
 }

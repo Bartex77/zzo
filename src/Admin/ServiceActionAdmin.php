@@ -18,6 +18,7 @@ final class ServiceActionAdmin extends AbstractAdmin
         $datagridMapper
             ->add('id')
             ->add('name')
+            ->add('equipment')
             ->add('performedByProducer')
             ->add('preservativeProductAmount')
             ->add('comment')
@@ -28,13 +29,14 @@ final class ServiceActionAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('name')
-            ->add('performedByProducer')
-            ->add('preservativeProductAmount')
-            ->add('preservativeProduct')
-            ->add('timeInterval')
-            ->add('timeIntervalValue')
-            ->add('comment')
+            ->add('name', null, ['label' => 'Nazwa'])
+            ->add('equipment', null, ['label' => 'Nazwa urządzenia'])
+            ->add('performedByProducer', null, ['label' => 'Wykonuje producent'])
+            ->add('preservativeProduct', null, ['label' => 'Produkt konserwujący'])
+            ->add('preservativeProductAmount', null, ['label' => 'Liczba jednostek produktu konserwującego'])
+            ->add('timeInterval', null, ['label' => 'Odstęp czasowy'])
+            ->add('timeIntervalValue', null, ['label' => 'Co ile (roboczogodzin lub lat)'])
+            ->add('comment', null, ['label' => 'Uwagi'])
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],

@@ -53,6 +53,12 @@ class ServiceAction
      */
     private $timeIntervalValue;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Equipment", inversedBy="serviceActions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $equipment;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +144,18 @@ class ServiceAction
     public function setTimeIntervalValue(?int $timeIntervalValue): self
     {
         $this->timeIntervalValue = $timeIntervalValue;
+
+        return $this;
+    }
+
+    public function getEquipment(): ?Equipment
+    {
+        return $this->equipment;
+    }
+
+    public function setEquipment(?Equipment $equipment): self
+    {
+        $this->equipment = $equipment;
 
         return $this;
     }
