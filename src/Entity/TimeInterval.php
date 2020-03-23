@@ -55,7 +55,7 @@ class TimeInterval
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $WarningValue;
+    private $warningValue;
 
     public function __construct()
     {
@@ -153,12 +153,12 @@ class TimeInterval
 
     public function getWarningValue(): ?int
     {
-        return $this->WarningValue;
+        return $this->warningValue;
     }
 
-    public function setWarningValue(?int $WarningValue): self
+    public function setWarningValue(?int $warningValue): self
     {
-        $this->WarningValue = $WarningValue;
+        $this->warningValue = $warningValue;
 
         return $this;
     }

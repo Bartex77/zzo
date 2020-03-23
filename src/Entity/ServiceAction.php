@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -58,6 +60,16 @@ class ServiceAction
      * @ORM\JoinColumn(nullable=false)
      */
     private $equipment;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ServiceActionPerformed", mappedBy="serviceAction")
+     */
+    private $serviceActionPerformed;
+
+    public function __construct()
+    {
+        $this->serviceActionPerformed = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -156,6 +168,34 @@ class ServiceAction
     public function setEquipment(?Equipment $equipment): self
     {
         $this->equipment = $equipment;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ServiceActionPerformed[]
+     */
+    public function getServiceActionPerformed(): Collection
+    {
+        return $this->serviceActionPerformed;
+    }
+
+    public function addServiceActionPerformed(ServiceActionPerformed $serviceActionPerformed): self
+    {
+        if (!$this->serviceActionPerformed->contains($serviceActionPerformed)) {
+            $this->serviceActionPerformed[] = $serviceActionPerformed;
+            $serviceActionPerformed->addServiceAction($this);
+        }
+
+        return $this;
+    }
+
+    public function removeServiceActionPerformed(ServiceActionPerformed $serviceActionPerformed): self
+    {
+        if ($this->serviceActionPerformed->contains($serviceActionPerformed)) {
+            $this->serviceActionPerformed->removeElement($serviceActionPerformed);
+            $serviceActionPerformed->removeServiceAction($this);
+        }
 
         return $this;
     }

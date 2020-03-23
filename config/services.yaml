@@ -88,3 +88,10 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Działania serwisowe }
         public: true
+
+    admin.worker:
+        class: App\Admin\WorkerAdmin
+        arguments: [~, App\Entity\Worker, App\Controller\WorkerAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Worker }
+        public: true
