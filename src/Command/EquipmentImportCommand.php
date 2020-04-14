@@ -57,9 +57,6 @@ class EquipmentImportCommand extends Command
         foreach ($results as $record) {
             switch ($next) {
                 case 'equipment':
-                    if (strstr($record['equipment'], 'Dmuchawa cyrculacyjna (obiegowa) biogazu')) {
-                        $io->note($record['equipment']);
-                    }
                     $next = 'service';
                     $number = str_replace('do / bis', 'do', $record['number']);
                     $number = str_replace('bis / do', 'do', $number);
